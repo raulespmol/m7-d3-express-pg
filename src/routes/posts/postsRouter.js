@@ -11,4 +11,15 @@ postsRouter.get('/', async (req, res) => {
   }
 })
 
+postsRouter.post('/', async (req, res) => {
+  const newPost = req.body
+  try {
+    const post = await postsModel.addPost(newPost)
+    res.json(post)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({msg: "Internal server error"})
+  }
+})
+
 module.exports = postsRouter
