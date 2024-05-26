@@ -1,7 +1,15 @@
 const database = require('../database/config')
 
 const getAll = async () =>{
-  const {rows} = await database.query("SELECT * FROM posts")
+  const {rows} = await database.query("SELECT * FROM posts ORDER BY id DESC")
+  return rows
+}
+
+const getPost = async (id) => {
+  const consulta = "SELECT * FROM posts WHERE id = $1"
+  const values = [id]
+  const {rows} = await database.query(consulta, values)
+
   return rows
 }
 
@@ -28,6 +36,7 @@ const deletePost = async (id) => {
 
 const postsModel = {
   getAll,
+  getPost,
   addPost,
   likePost,
   deletePost
