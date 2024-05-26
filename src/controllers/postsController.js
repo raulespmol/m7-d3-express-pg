@@ -21,7 +21,31 @@ const addPostController = async (req, res) => {
   }
 }
 
+const likePostController = async (req, res) => {
+  try {
+    const {id} = req.params
+    const {rows} = await postsModel.likePost(id)
+    res.send(`Post ${id} liked`)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({msg: "Internal server error"})
+  }
+}
+
+const deletePostController = async (req, res) => {
+  try {
+    const {id} = req.params
+    const {rows} = await postsModel.deletePost(id)
+    res.send(`Post ${id} eliminado correctamente`)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({msg: "Internal server error"})
+  }
+}
+
 module.exports = {
   getPostsController,
-  addPostController
+  addPostController,
+  likePostController,
+  deletePostController
 }

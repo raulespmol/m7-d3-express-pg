@@ -14,9 +14,23 @@ const addPost = async (post) => {
   return rows
 }
 
+const likePost = async (id) => {
+  const consulta = "UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *"
+  const result = await database.query(consulta, [id])
+  return result
+} 
+
+const deletePost = async (id) => {
+  const consulta = "DELETE FROM posts WHERE id = $1 RETURNING *"
+  const result = await database.query(consulta, [id])
+  return result
+}
+
 const postsModel = {
   getAll,
-  addPost
+  addPost,
+  likePost,
+  deletePost
 }
 
 module.exports = postsModel
